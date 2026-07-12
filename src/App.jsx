@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { ArrowUpRight, BookOpenText, MoonStar, Play, Sparkles, Stars } from 'lucide-react'
+import { ArrowUpRight, BookOpenText, MoonStar, Play, Sparkles } from 'lucide-react'
 import CosmicScene from './components/CosmicScene.jsx'
 
 const services = [
@@ -53,7 +53,7 @@ function App() {
     <div className="site-shell">
       <header className="site-header">
         <a className="brand" href="#top" aria-label="กลับไปด้านบน">
-          <Stars size={22} />
+          <img src="/image/patthararuethai-logo.png" alt="" />
           <span>พยากรณ์บ้านดวงดี</span>
         </a>
         <nav aria-label="เมนูหลัก">
