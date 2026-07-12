@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
-import { ArrowUpRight, BookOpenText, MoonStar, Play, Sparkles } from 'lucide-react'
+import { ArrowLeft, ArrowUpRight, BookOpenText, CalendarDays, MoonStar, Play, Sparkles } from 'lucide-react'
 import CosmicScene from './components/CosmicScene.jsx'
+import blogPosts from '../data/daily-predictions.json'
 
 const services = [
   {
@@ -44,10 +45,66 @@ const readings = [
 
 function App() {
   const [readingId, setReadingId] = useState('starlight')
+  const isBlogPage = window.location.pathname.replace(/\/$/, '') === '/blog'
   const activeReading = useMemo(
     () => readings.find((reading) => reading.id === readingId) ?? readings[0],
     [readingId],
   )
+
+  if (isBlogPage) {
+    return (
+      <div className="site-shell">
+        <header className="site-header">
+          <a className="brand" href="/" aria-label="กลับหน้าแรก">
+            <img src="/image/patthararuethai-logo.png" alt="" />
+            <span>พยากรณ์บ้านดวงดี</span>
+          </a>
+          <nav aria-label="เมนูหลัก">
+            <a href="/">หน้าแรก</a>
+            <a href="/blog">Blog</a>
+          </nav>
+        </header>
+
+        <main className="blog-page">
+          <section className="blog-hero">
+            <a className="back-link" href="/">
+              <ArrowLeft size={18} />
+              กลับหน้าแรก
+            </a>
+            <p className="section-kicker">Daily Prediction Blog</p>
+            <h1>Blog คำทำนายรายวัน</h1>
+            <p>
+              รวมการ์ดข่าวและหัวข้อคำทำนายรายวันแบบ text-only อ่านง่าย อัปเดตอัตโนมัติทุกวันเวลา 09:00 น.
+              จากแหล่งข้อมูลสาธารณะ พร้อมลิงก์ไปยังต้นทาง
+            </p>
+          </section>
+
+          <section className="blog-grid" aria-label="การ์ดคำทำนายรายวัน">
+            {blogPosts.map((post) => (
+              <article className="blog-card" key={post.id}>
+                <div className="blog-meta">
+                  <span>
+                    <CalendarDays size={16} />
+                    {post.date}
+                  </span>
+                  <span>{post.tag}</span>
+                </div>
+                <h2>{post.title}</h2>
+                <p>{post.summary}</p>
+                <div className="blog-source">
+                  <span>{post.source}</span>
+                  <a href={post.url} target="_blank" rel="noreferrer">
+                    อ่านต้นทาง
+                    <ArrowUpRight size={16} />
+                  </a>
+                </div>
+              </article>
+            ))}
+          </section>
+        </main>
+      </div>
+    )
+  }
 
   return (
     <div className="site-shell">
@@ -59,6 +116,7 @@ function App() {
         <nav aria-label="เมนูหลัก">
           <a href="#energy">เช็คพลังงาน</a>
           <a href="#services">บริการ</a>
+          <a href="/blog">Blog</a>
           <a href="#channels">ช่องทาง</a>
         </nav>
       </header>
